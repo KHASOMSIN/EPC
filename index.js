@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const pool = require("./database/dbConnection"); // Import database connection
 const { getAllUsers } = require("./model/getusers"); // Adjust import based on your file export
-const register = require("./route/register");
+const register = require("./model/register");
 
 const app = express();
 
