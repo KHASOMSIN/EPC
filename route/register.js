@@ -1,10 +1,9 @@
 require("dotenv").config(); // Load environment variables
-
 const express = require("express");
-const bcrypt = require("bcrypts");
+const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
-const db = require("../database"); // Update path if necessary
+const db = require("../database/dbConnection"); // Update path if necessary
 const router = express.Router();
 const saltRounds = 10;
 

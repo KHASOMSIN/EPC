@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const pool = require("./database/dbConnection"); // Import database connection
 const { getAllUsers } = require("./model/getusers"); // Adjust import based on your file export
+const register = require("./route/register");
 
 const app = express();
 
@@ -14,7 +15,6 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-
 // Example route for fetching users
 app.get("/users", async (req, res) => {
   try {
@@ -24,6 +24,9 @@ app.get("/users", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// register
+app.use("/auth", register);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
