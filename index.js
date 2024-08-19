@@ -1,10 +1,9 @@
-// index.js
+const http = require("http");
 require("dotenv").config(); // Load environment variables
-const bcrypt = require("bcryptjs");
 const express = require("express");
 const bodyParser = require("body-parser");
 const pool = require("./database/dbConnection"); // Import database connection
-const getAllUsers = require("./model/getusers");
+const { getAllUsers } = require("./model/getusers"); // Adjust import based on your file export
 
 const app = express();
 
@@ -19,7 +18,7 @@ app.get("/", (req, res) => {
 // Example route for fetching users
 app.get("/users", async (req, res) => {
   try {
-    const users = await userModel.getAllUsers();
+    const users = await getAllUsers(); // Fetch users using the model function
     res.json(users);
   } catch (error) {
     res.status(500).json({ error: error.message });
