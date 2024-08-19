@@ -33,7 +33,9 @@ router.post("/register", async (req, res) => {
       "SELECT * FROM users WHERE fullname = ? OR email = ?",
       [fullname, email]
     );
+
     if (existingUsers.length > 0) {
+      console.error("User already exists:", existingUsers);
       return res.status(400).send("Username or email already exists");
     }
 
@@ -51,6 +53,8 @@ router.post("/register", async (req, res) => {
       [fullname, hashedPassword, email, otp, otpExpires, passwordToken]
     );
 
+    console.log("User registered successfully:", result);
+
     // Send OTP email
     const mailOptions = {
       from: process.env.EMAIL_USER,
@@ -59,7 +63,18 @@ router.post("/register", async (req, res) => {
       text: `Your OTP code is ${otp}. It is valid for 10 minutes.`,
     };
 
-    await transporter.sendMail(mailOptions);
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log("OTP email sent successfully.");
+    } catch (emailError) {
+      console.error("Error sending OTP email:", emailError);
+      // Respond to the client indicating that registration was successful but OTP email failed
+      return res
+        .status(201)
+        .send(
+          "User registered successfully. However, there was an issue sending the OTP email."
+        );
+    }
 
     res
       .status(201)

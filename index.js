@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const pool = require("./database/dbConnection"); // Import database connection
 const { getAllUsers } = require("./model/getusers"); // Adjust import based on your file export
 const register = require("./model/register");
+const verifyOtp = require("./model/verifyOtp");
 
 const app = express();
 
@@ -27,6 +28,8 @@ app.get("/users", async (req, res) => {
 
 // register
 app.use("/auth", register);
+// verify code
+app.use("/auth", verifyOtp);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
