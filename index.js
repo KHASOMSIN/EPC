@@ -29,11 +29,10 @@ app.get("/users", async (req, res) => {
 });
 
 // Register routes
-app.use("/auth/register", register);
-
+app.use("/auth", register);
 // Verify OTP routes
-app.use("/auth/verify", verifyOtp);
-app.use("/auth/login", login);
+app.use("/auth", verifyOtp);
+app.use("/auth", login);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
